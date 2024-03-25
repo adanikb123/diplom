@@ -34,6 +34,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
+
     @OneToMany(mappedBy = "user")
     List<UserSong> userSongs ;
 }
