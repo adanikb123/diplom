@@ -20,7 +20,7 @@ import java.util.List;
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "author",nullable = false,length = 50)
     private String author;
     @Column(name = "name",nullable = false,length = 50)

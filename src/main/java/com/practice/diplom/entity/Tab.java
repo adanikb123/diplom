@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Tab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "instrument_name", nullable = false, length = 50)
     private String instrumentName;
     @Column(name = "url", nullable = false, length = 70)
