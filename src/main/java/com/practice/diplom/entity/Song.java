@@ -21,10 +21,19 @@ public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+  
     @Column(name = "author",nullable = false,length = 50)
     private String author;
+  
     @Column(name = "name",nullable = false,length = 50)
     private String name;
+  
+    @Column(name = "author",nullable = false,length = 50)
+    private String author;
+  
+    @Column(name = "name",nullable = false,length = 50)
+    private String name;
+
     @OneToMany(mappedBy = "song",cascade = CascadeType.REMOVE)
     private List<Tab> tabs ;
 
