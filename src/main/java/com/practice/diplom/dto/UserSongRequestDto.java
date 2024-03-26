@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserSongRequestDto {
     private Long id;
     private Long songId;
-
     private Long userId;
 }

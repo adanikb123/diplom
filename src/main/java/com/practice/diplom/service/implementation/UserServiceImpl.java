@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("Пользователь с таким id = %d не существует", id)));
+
     }
 
     @Override
