@@ -20,7 +20,7 @@ public class UserSong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "song_id",referencedColumnName = "id")
