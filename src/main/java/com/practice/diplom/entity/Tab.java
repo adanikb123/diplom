@@ -20,10 +20,7 @@ public class Tab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "instrument_name", nullable = false, length = 50)
-    private String instrumentName;
-
+  
     @Column(name = "instrument_name", nullable = false, length = 50)
     private String instrumentName;
   
