@@ -15,4 +15,6 @@ public interface UserService {
     User getUserById(Long id);
 
     UserResponseDto getUserDtoById(Long id);
+
+    void checkid(Long id);
 }
