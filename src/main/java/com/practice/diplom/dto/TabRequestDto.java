@@ -11,6 +11,6 @@ public class TabRequestDto {
     private String instrumentName;
     private String url;
 
-    private Long songId;
+
 
 }

@@ -47,13 +47,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new NotFoundException(String.format("Пользователь с таким id = %d не существует", id)));
+        checkid(id);
+        return userRepository.findById(id).get();
 
     }
 
     @Override
     public UserResponseDto getUserDtoById(Long id) {
         return userMapper.toResponseDto(getUserById(id));
+    }
+
+    @Override
+    public void checkid(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException(String.format("Пользователь с таким id = %d не существует", id));
+        }
     }
 }
