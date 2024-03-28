@@ -6,5 +6,5 @@ import com.practice.diplom.entity.Song;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface SongMapper extends GeneralMapper<SongRequestDto, Song, SongResponseDto> {
+public interface SongMapper extends GeneralMapper<SongResponseDto, Song, SongRequestDto> {
 }

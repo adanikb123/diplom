@@ -89,7 +89,7 @@
 				<configuration>
 					<url>jdbc:postgresql://localhost:5432/diplom</url>
 					<user>postgres</user>
-					<password>aboba</password>
+					<password>322644</password>
 				</configuration>
 			</plugin>
 		</plugins>

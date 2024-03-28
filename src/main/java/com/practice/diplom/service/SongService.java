@@ -8,11 +8,14 @@ import java.util.List;
 
 public interface SongService {
     List<SongResponseDto> getAllSongs();
+
     List<SongResponseDto> getAllSongsByAuthor(String author);
 
     SongResponseDto createSong(SongRequestDto songRequestDto);
 
     Song getSongById(Long id);
+
+    SongResponseDto getSongDtoById(Long id);
 
 
 }
