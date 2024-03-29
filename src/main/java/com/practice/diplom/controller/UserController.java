@@ -6,8 +6,10 @@ import com.practice.diplom.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/user")
 @Tag(name = "Пользователи",description = "Методы для работы с пользователями")
 public class UserController {
@@ -35,7 +38,7 @@ public class UserController {
 
     @PatchMapping("/update/{id}")
     @Operation(summary = "Изменение пользователя по его id")
-    public void updateUser(@RequestBody UserRequestDto userRequestDto, @PathVariable @Parameter(description = "id пользователя")Long id) {
+    public void updateUser(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable @Parameter(description = "id пользователя")Long id) {
         userService.updateUser(userRequestDto, id);
     }
 
