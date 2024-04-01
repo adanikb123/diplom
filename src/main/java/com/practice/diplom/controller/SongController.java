@@ -8,10 +8,12 @@ import com.practice.diplom.service.SongService;
 import com.practice.diplom.service.UserSongService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping("/song")
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Песни",description = "Методы для работы с песнями и табулатурами")
 public class SongController {
 
@@ -37,12 +40,14 @@ public class SongController {
 
     @GetMapping("/all")
     @Operation(summary = "Получение список всех песен")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public List<SongResponseDto> getAllSongs(){
         return songService.getAllSongs();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Получение песни по Id")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public SongResponseDto getSongById(@PathVariable  @Parameter(description = "id песни") Long id){
         return songService.getSongDtoById(id);
     }
@@ -50,18 +55,21 @@ public class SongController {
 
     @PostMapping("/new")
     @Operation(summary = "Создание песни")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public SongResponseDto createSong(@Valid @RequestBody SongRequestDto songResponseDto){
         return songService.createSong(songResponseDto);
     }
 
     @PostMapping("/userSong/new")
     @Operation(summary = "Создание песни пользователя для добавления в личный кабинет")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public UserSongResponseDto createUserSong(@Valid @RequestBody UserSongRequestDto userSongRequestDto){
         return userSongService.createUserSong(userSongRequestDto);
     }
 
     @GetMapping("/userSong/{id}/all")
     @Operation(summary = "Получение списка песен добавленных пользователем")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public List<UserSongResponseDto> getAllUserSongs(@PathVariable @Parameter(description = "id пользователя") Long id){
         return userSongService.getAllUserSongsByUserId(id);
     }

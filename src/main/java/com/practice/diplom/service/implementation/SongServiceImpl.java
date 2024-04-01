@@ -63,7 +63,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public SongResponseDto getSongDtoById(Long id){
+    public SongResponseDto getSongDtoById(Long id) {
         return songMapper.toResponseDto(getSongById(id));
     }
 }

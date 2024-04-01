@@ -20,9 +20,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = RoleTypePatternValidator.class)
-public @interface RoleTypeSubSet {
-    RoleType[] anyOf();
-    String message() default "must be any of {anyOf}";
+public @interface RoleTypePattern {
+    String regexp();
+
+    String message() default "must match \"{regexp}\"";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
