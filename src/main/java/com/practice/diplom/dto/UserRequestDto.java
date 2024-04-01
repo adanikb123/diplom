@@ -1,7 +1,7 @@
 package com.practice.diplom.dto;
 
 import com.practice.diplom.entity.enums.RoleType;
-import com.practice.diplom.validator.RoleTypeSubSet;
+import com.practice.diplom.validator.RoleTypePattern;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,6 +24,6 @@ public class UserRequestDto {
     @Size(min = 5,max = 60,message = "{password.wrongSize}")
     private String password;
 
-    @RoleTypeSubSet(anyOf = {RoleType.USER,RoleType.ADMIN})
+    @RoleTypePattern(regexp = "USER|ADMIN")
     private RoleType role;
 }
