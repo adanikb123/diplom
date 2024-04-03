@@ -3,13 +3,13 @@ package com.practice.diplom.service;
 import com.practice.diplom.dto.SongRequestDto;
 import com.practice.diplom.dto.SongResponseDto;
 import com.practice.diplom.entity.Song;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SongService {
-    List<SongResponseDto> getAllSongs();
+    Page<SongResponseDto> getAllSongs(Pageable pageable);
 
-    List<SongResponseDto> getAllSongsByAuthor(String author);
+    Page<SongResponseDto> getAllSongsByAuthor(String author,Pageable pageable);
 
     SongResponseDto createSong(SongRequestDto songRequestDto);
 

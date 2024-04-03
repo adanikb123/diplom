@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request,jsonify
 import urllib.request
 import nn
 
@@ -6,9 +6,9 @@ app = Flask(__name__)
 
 @app.route("/generate-tabs",methods = ['POST'])
 def generate_tabs():
-    if 'audio' not in request.json:
+    if 'url' not in request.json:
         return "Файл не найден."
-    audio_url = request.json['audio']
+    audio_url = request.json['url']
     try:
         with urllib.request.urlopen(audio_url) as response:
             file = response.read()
@@ -16,7 +16,7 @@ def generate_tabs():
     except urllib.error.URLError:
         print("Не удалось получить файл.")
     tabs = nn.generate_tablature(file)
-    return tabs
+    return jsonify(tabs)
 
 if __name__ == '__main__':
     app.run(debug=True,port = 5001)

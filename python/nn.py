@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import json
 
 # Загрузка данных и предобработка
 # ToDo
@@ -24,7 +23,7 @@ def generate(input_data):
         "instrumentName":"bass guitar",
         "url":"https://content.tomplay.com/preview/2022/09/Ima_Demons_INT_OV_ElectricBass_NotesTab_Danny_fl_emil_v2_25-08-2022_001.png"
     }]
-    return json.dumps(result)
+    return result
 
 # Генерация табулатуры из аудиофайла
 def generate_tablature(audio_file):

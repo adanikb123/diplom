@@ -13,6 +13,8 @@ import com.practice.diplom.service.UserService;
 import com.practice.diplom.service.UserSongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,10 +35,10 @@ public class UserSongServiceImpl implements UserSongService {
     private UserService userService;
 
     @Override
-    public List<UserSongResponseDto> getAllUserSongsByUserId(Long id) {
+    public Page<UserSongResponseDto> getAllUserSongsByUserId(Long id, Pageable pageable) {
         userService.checkid(id);
-        List<UserSong> userSongs = userSongRepository.findAllByUserId(id);
-        return userSongMapper.toResponseDtos(userSongs);
+        Page<UserSong> userSongs = userSongRepository.findAllByUserId(id,pageable);
+        return userSongs.map(userSongMapper::toResponseDto);
     }
 
     @Override
