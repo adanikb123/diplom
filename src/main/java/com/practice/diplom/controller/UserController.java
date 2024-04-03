@@ -12,6 +12,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,14 +42,16 @@ public class UserController {
     @GetMapping("/all")
     @Operation(summary = "Получение всех зарегистрированных пользователей")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    public List<UserResponseDto> getAllUsers() {
-        return userService.getAllUsers();
+    public Page<UserResponseDto> getAllUsers(@PageableDefault(size = 2,sort = "id",direction = Sort.Direction.ASC)Pageable pageable) {
+        return userService.getAllUsers(pageable);
     }
 
     @PatchMapping("/update/{id}")
     @Operation(summary = "Изменение пользователя по его id")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    public void updateUser(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable @Parameter(description = "id пользователя")Long id) {
+    public void updateUser(
+            @Valid @RequestBody UserRequestDto userRequestDto,
+            @PathVariable @Parameter(description = "id пользователя")Long id) {
         userService.updateUser(userRequestDto, id);
     }
     @PatchMapping("/update/{id}/password")

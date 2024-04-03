@@ -12,8 +12,10 @@ import com.practice.diplom.service.SongService;
 import com.practice.diplom.service.TabService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -30,14 +32,15 @@ public class SongServiceImpl implements SongService {
     private TabService tabService;
 
     @Override
-    public List<SongResponseDto> getAllSongs() {
-        List<Song> songs = songRepository.findAll();
-        return songMapper.toResponseDtos(songs);
+    public Page<SongResponseDto> getAllSongs(Pageable pageable) {
+        Page<Song> songs = songRepository.findAll(pageable);
+        return songs.map(songMapper::toResponseDto);
     }
 
     @Override
-    public List<SongResponseDto> getAllSongsByAuthor(String author) {
-        return null;
+    public Page<SongResponseDto> getAllSongsByAuthor(String author,Pageable pageable) {
+        Page<Song> songs = songRepository.findAllByAuthor(author,pageable);
+        return songs.map(songMapper::toResponseDto);
     }
 
     @Override

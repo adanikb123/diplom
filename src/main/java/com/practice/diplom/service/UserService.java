@@ -5,12 +5,14 @@ import com.practice.diplom.dto.LoginRequestDto;
 import com.practice.diplom.dto.UserRequestDto;
 import com.practice.diplom.dto.UserResponseDto;
 import com.practice.diplom.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    List<UserResponseDto> getAllUsers();
+    Page<UserResponseDto> getAllUsers(Pageable pageable);
 
     JwtResponseDto createUser(UserRequestDto userRequest);
 

@@ -2,9 +2,12 @@ package com.practice.diplom.controller;
 
 import com.practice.diplom.dto.SongRequestDto;
 import com.practice.diplom.dto.SongResponseDto;
+import com.practice.diplom.dto.TabRequestDto;
+import com.practice.diplom.dto.UrlRequest;
 import com.practice.diplom.dto.UserSongRequestDto;
 import com.practice.diplom.dto.UserSongResponseDto;
 import com.practice.diplom.service.SongService;
+import com.practice.diplom.service.TabService;
 import com.practice.diplom.service.UserSongService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +16,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,11 +45,14 @@ public class SongController {
     @Autowired
     private UserSongService userSongService;
 
+    @Autowired
+    private TabService tabService;
+
     @GetMapping("/all")
     @Operation(summary = "Получение список всех песен")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    public List<SongResponseDto> getAllSongs(){
-        return songService.getAllSongs();
+    public Page<SongResponseDto> getAllSongs(@PageableDefault(size = 2,sort = "id",direction = Sort.Direction.ASC)Pageable pageable) {
+        return songService.getAllSongs(pageable);
     }
 
     @GetMapping("/{id}")
@@ -70,8 +80,16 @@ public class SongController {
     @GetMapping("/userSong/{id}/all")
     @Operation(summary = "Получение списка песен добавленных пользователем")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    public List<UserSongResponseDto> getAllUserSongs(@PathVariable @Parameter(description = "id пользователя") Long id){
-        return userSongService.getAllUserSongsByUserId(id);
+    public Page<UserSongResponseDto> getAllUserSongs(
+            @PageableDefault(size = 2,sort = "id",direction = Sort.Direction.ASC)Pageable pageable,
+            @PathVariable @Parameter(description = "id пользователя") Long id){
+        return userSongService.getAllUserSongsByUserId(id,pageable);
     }
 
+    @PostMapping("/generate")
+    @Operation(summary = "Генерация табулатуры")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    public List<TabRequestDto> getGeneratedTabs(@Valid @RequestBody UrlRequest urlAudio){
+        return tabService.generateTabs(urlAudio);
+    }
 }
