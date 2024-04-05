@@ -1,12 +1,13 @@
-import { HeaderMain } from "../../components/Header"
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Login,Reg ,Song, Main, UserManager, PersonalAccount} from '../'
+import { Login,Reg ,Song, Main, UserManager, PersonalAccount, GenerateTabs} from '../'
+import LayOut  from "../../components/LayOut/LayOut";
 
 
 const App = () => {
     return (
       <Router>
-        <HeaderMain>
+        <LayOut>
           <Routes>
             <Route path="/login" element={<Login/>}/>
 
@@ -14,16 +15,16 @@ const App = () => {
 
             <Route path="/home" element={<Main/>}/>
 
+            <Route path="/generate-tabs" element={<GenerateTabs/>}/>
+
             <Route path="/user/:userId" element={<PersonalAccount/>}/>
 
             <Route path="/song/:songId" element={<Song/>}/>
 
             <Route path="/users" element={<UserManager/>}/>
-
-            <Route path="/songs" element={<Main/>}/>
           </Routes>
 
-        </HeaderMain>
+        </LayOut>
 
       </Router>
   )

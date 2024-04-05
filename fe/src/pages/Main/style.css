@@ -1,0 +1,7 @@
+.myRow td,
+.myRow th {
+    border-color: rgb(0, 30, 60);
+    border-width: 2px;
+    border-style: solid;
+  }
+  

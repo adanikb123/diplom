@@ -20,20 +20,28 @@ const items = () => [
         style: verticalCenter
     },
     {
-        label:(
-            <NavLink to = "/login">login</NavLink>
-
+        label: (
+            <NavLink to="/generate-tabs" >Generate tabs</NavLink>
         ),
-        key:'login',
+        key: 'tabs_generator',
         style: verticalCenter
-    },
 
+    },
     {
         label: (
             <span></span>
         ),
         key: 'space',
         style: space
+       
+    },
+    {
+        label:(
+            <NavLink to = "/login">login</NavLink>
+
+        ),
+        key:'login',
+        style: verticalCenter
     },
     {
         label: (
