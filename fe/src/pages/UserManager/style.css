@@ -1,0 +1,15 @@
+.saveButton{
+    width: 90px;
+    position: absolute;
+    left :0;
+    bottom:0;
+}
+.table td{
+    border-width: 2px;
+    border-style: solid;
+  }
+.table th {
+    border-width: 2px;
+    border-style: solid;
+  }
+    

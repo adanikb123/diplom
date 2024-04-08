@@ -1,23 +1,25 @@
 import { Table } from "antd";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 
 const Main =()=>{
 const columns = [
     { 
-        title: "Author",
+        title: "Автор",
         dataIndex:"author",
         key:"author"
     },
     { 
-        title: "Song name",
+        title: "Название песни",
         dataIndex:"name",
         key:"name",
-        render: (text) => <a>{text}</a>
+        render: (text,record) =>
+        <Link to={`/song/${record.key}`}>{text}</Link>
     
     },
     { 
-        title: "Instrument name",
+        title: "Название ",
         dataIndex:"instrumentName",
         key:"instrumentName",
         render: (instrumentName) => (

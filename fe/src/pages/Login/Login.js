@@ -32,9 +32,9 @@ const Login = () => {
       onFinish={onFinish}
     >
         <Form.Item >
-        <Title level = {2}>Tabs Generator</Title>
+        <Title level = {2}>Генератор табулатуры</Title>
             <Text type = "secondary">
-               Log in service for generating tabs
+               Войти в серивис для генерации
             </Text>
         </Form.Item>
         
@@ -43,7 +43,7 @@ const Login = () => {
         rules={[
           {
             required: true,
-            message: "email is requided",
+            message: "email обязателен",
           },
         ]}
       >
@@ -54,7 +54,7 @@ const Login = () => {
         rules={[
           {
             required: true,
-            message: "password is requided"
+            message: "пароль обязателен"
           },
         ]}
       >
@@ -66,10 +66,10 @@ const Login = () => {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-            Sign in
-        </Button> Or
+            Войти
+        </Button> или
        <Button type="primary" htmlType="button" className="login-form-button" onClick={onClickRegistration} >
-            Register now
+            Зарегистрироваться 
         </Button>
       </Form.Item>
 
