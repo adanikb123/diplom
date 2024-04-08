@@ -29,9 +29,9 @@ const Reg =() => {
         onFinish={onFinish}
       >
           <Form.Item >
-          <Title level = {2}>Tabs Generator</Title>
+          <Title level = {2}>Генератор табулатуры</Title>
               <Text type = "secondary">
-                 Register in service for generating tabs
+                 Регистрация в сервисе для генерации табулатуры
               </Text>
           </Form.Item>
           
@@ -40,7 +40,7 @@ const Reg =() => {
           rules={[
             {
               required: true,
-              message: "email is requided",
+              message: "email обязателен",
             },
           ]}
         >
@@ -51,7 +51,7 @@ const Reg =() => {
           rules={[
             {
               required: true,
-              message: "userName is requided",
+              message: "userName обязателен",
             },
           ]}
         >
@@ -62,7 +62,7 @@ const Reg =() => {
           rules={[
             {
               required: true,
-              message: "password is requided"
+              message: "пароль обязателен"
             },
           ]}
         >
@@ -74,7 +74,7 @@ const Reg =() => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button">
-              Register
+              Зарегистрироваться
           </Button> 
         </Form.Item>
   

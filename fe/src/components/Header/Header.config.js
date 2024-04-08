@@ -6,7 +6,7 @@ import {space,verticalCenter,logoStyle} from "./Header.style.js";
 const items = () => [
     {
         label: (
-            <NavLink to="/home" style={logoStyle}>Tabs generator</NavLink>
+            <NavLink to="/home" style={logoStyle}>Генератор табулатуры</NavLink>
         ),
         key: 'tabs',
         style: verticalCenter
@@ -14,14 +14,14 @@ const items = () => [
     },
     {
         label: (
-            <NavLink to="/home">home</NavLink>
+            <NavLink to="/home">На главную</NavLink>
         ),
         key: 'home',
         style: verticalCenter
     },
     {
         label: (
-            <NavLink to="/generate-tabs" >Generate tabs</NavLink>
+            <NavLink to="/generate-tabs" >Сгенерировать табулатуры</NavLink>
         ),
         key: 'tabs_generator',
         style: verticalCenter
@@ -37,7 +37,7 @@ const items = () => [
     },
     {
         label:(
-            <NavLink to = "/login">login</NavLink>
+            <NavLink to = "/login">Войти</NavLink>
 
         ),
         key:'login',
