@@ -1,7 +1,6 @@
 package com.practice.diplom.service.implementation;
 
 import com.practice.diplom.dto.TabRequestDto;
-import com.practice.diplom.dto.TabResponseDto;
 import com.practice.diplom.dto.UrlRequest;
 import com.practice.diplom.entity.Tab;
 import com.practice.diplom.exception.NotFoundException;
@@ -20,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TabServiceImpl implements TabService {
 
-    private final String URL = "http://localhost:5001/generate-tabs";
+    private final String SCRIPT_URL = "http://localhost:5001/generate-tabs";
 
     @Autowired
     private TabRepository tabRepository;
@@ -50,7 +49,8 @@ public class TabServiceImpl implements TabService {
     @Transactional
     public List<TabRequestDto> generateTabs(UrlRequest url) {
         RestTemplate restTemplate = new RestTemplate();
-        List<TabRequestDto> tabRequestDtos =  restTemplate.postForObject(URL,url,List.class);
+        List<TabRequestDto> tabRequestDtos = null;
+        tabRequestDtos = restTemplate.postForObject(SCRIPT_URL,url, List.class);
         return tabRequestDtos;
     }
 

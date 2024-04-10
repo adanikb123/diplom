@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { Button, Card, Avatar, Input,Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import {useNavigate} from 'react-router-dom';
+import {useDispatch,useSelector} from "react-redux"
 
 
 const PersonalAccount = ()=>{
-    const [username, setUsername] = useState("User Name");
+
+    const dispatch = useDispatch();
+
+    const user = useSelector(state => state.user);
+
+   
     const [isEditing, setIsEditing] = useState(false);
   
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,7 +32,7 @@ const PersonalAccount = ()=>{
       };
 
     const handleInputChange = (e) => {
-      setUsername(e.target.value);
+      //setUsername(e.target.value);
     };
 
     const handleModalOk = () => {
@@ -42,11 +48,11 @@ const PersonalAccount = ()=>{
         <Card>
         <Avatar size={64} icon={<UserOutlined />} />
         {isEditing ? (
-          <Input value={username} onChange={handleInputChange} />
+          <Input value={user.username} onChange={handleInputChange} />
         ) : (
-          <h2>{username}</h2>
+          <h2>{user.username}</h2>
         )}
-        <p>Email: user@example.com</p>
+        <p>Email: {user.email}</p>
         {isEditing ? (
           <Button type="primary" onClick={handleSaveClick}>Save</Button>
         ) : (

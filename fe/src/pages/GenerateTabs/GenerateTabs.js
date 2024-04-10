@@ -1,8 +1,8 @@
+import { Uploader } from "./Uploader"
+
 const GenerateTabs = () => {
     return (
-        <div>
-            Generate Tabs
-        </div>
+     <Uploader/>
     )
 }
 

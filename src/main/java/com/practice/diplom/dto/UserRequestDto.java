@@ -25,5 +25,5 @@ public class UserRequestDto {
     private String password;
 
     @RoleTypePattern(regexp = "USER|ADMIN")
-    private RoleType role;
+    private RoleType role ;
 }

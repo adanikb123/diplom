@@ -1,6 +1,6 @@
 const space = {
     flex:"auto",
-    marginRight: '20px',
+    marginRight: '60px',
 }
 
 const verticalCenter = {

@@ -1,22 +1,51 @@
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
-import {Button, Card, Form, Input, Typography} from 'antd';
+import {Button, Card, Form, Input, Typography,notification} from 'antd';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch} from "react-redux"
 import "./style.css";
 import LayOut from '../../components/LayOut/LayOut';
+import { getUser } from '../../services/getUser';
+import { login } from '../../store/actionCreators/login';
 
 const {Title,Text} = Typography;
 
 const Login = () => {
-    let navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); 
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    let path = '/home';
-    navigate(path)
+    handleLogin(values.email,values.password)
+  };
+
+  const handleLogin = async (email,password) =>{
+    try{
+      const response = await getUser(email,password);
+      const user = response.data;
+      console.log(user)
+      dispatch(login(user))
+      navigate("/home") 
+      notification.open({
+        message:"OK",
+        description:"Вы успешно авторизовались",
+        placement:"topLeft",
+        type:"success"
+    });
+    
+    }catch(error){
+      notification.open({
+        message:"Ошибка",
+        description:"Такого пользователя не сущетсвует",
+        placement:"topRight",
+        type:"error"
+    });
+    console.log(error);
+    }
+
+  }
+
+  const onClickRegistration = () => {
+    navigate("/registration")
     };
-    const onClickRegistration = () => {
-      navigate("/registration")
-      };
   return (
     <LayOut >
         <div className='login'>

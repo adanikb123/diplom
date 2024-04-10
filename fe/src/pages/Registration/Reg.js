@@ -1,19 +1,46 @@
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
-import {Button, Card, Form, Input, Typography} from 'antd';
+import {Button, Card, Form, Input, Typography,notification} from 'antd';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch} from "react-redux"
 import "./style.css";
 import LayOut from '../../components/LayOut/LayOut';
+import { login } from '../../store/actionCreators/login';
+import { createUser } from '../../services/createUser';
 
 const {Title,Text} = Typography;
 
 const Reg =() => {
     let navigate = useNavigate();
+    const dispatch = useDispatch(); 
 
     const onFinish = (values) => {
-      console.log('Received values of form: ', values);
-      let path = '/home';
-      navigate(path)
-      };
+    
+      handleReg(values.email,values.name,values.password);
+    };
+    const handleReg = async(email,name,password)=>{
+      try{
+        const response = await createUser(email,name,password);
+        const user = response.data;
+        console.log(user);
+        dispatch(login(user));
+        navigate("/home");
+        notification.open({
+          message:"OK",
+          description:"Вы успешно зарегистрировались",
+          placement:"topLeft",
+          type:"success"
+      });
+      }catch(error){
+        notification.open({
+          message:"Ошибка",
+          description:"Не удалось зарегестрировать аккаунт",
+          placement:"topRight",
+          type:"error"
+      });
+
+      }
+      
+    }
     return (
       <LayOut >
           <div className='reg'>
@@ -21,8 +48,8 @@ const Reg =() => {
       <Card style = {{width: 500} }>
   
       <Form
-        name="normal_login"
-        className="login-form"
+        name="normal-registration"
+        className="registration-form"
         initialValues={{
           remember: true,
         }}
@@ -47,7 +74,7 @@ const Reg =() => {
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
         </Form.Item>
         <Form.Item
-          name="userName"
+          name="name"
           rules={[
             {
               required: true,
@@ -55,7 +82,7 @@ const Reg =() => {
             },
           ]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="userName" />
+          <Input prefix={<UserOutlined/>} placeholder="userName" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -67,13 +94,13 @@ const Reg =() => {
           ]}
         >
           <Input.Password
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined />}
             type="password"
             placeholder="Password"
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit">
               Зарегистрироваться
           </Button> 
         </Form.Item>
