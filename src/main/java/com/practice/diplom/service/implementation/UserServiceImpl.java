@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         JwtResponseDto jwtResponse = new JwtResponseDto();
         jwtResponse.setToken(jwt);
         jwtResponse.setId(userDetails.getId());
-        jwtResponse.setUsername(userDetails.getUsername());
+        jwtResponse.setUsername(userDetails.getName());
         jwtResponse.setEmail(userDetails.getEmail());
         jwtResponse.setRole(role);
         return jwtResponse;

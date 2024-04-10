@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu} from 'antd';
 import './style.css';
-import {items} from './Header.config.js';
+import {HeaderConf} from './Header.config.js';
 const { Header, Footer } = Layout;
 const HeaderMain = () => {
 
@@ -15,7 +15,7 @@ const HeaderMain = () => {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
-          items={items()}
+          items={HeaderConf()}
           style={{
             flex: 1,
             minWidth: 0,
