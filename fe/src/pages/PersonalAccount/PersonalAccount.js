@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Button, Card, Avatar, Input,Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import {useNavigate} from 'react-router-dom';
-import {useDispatch,useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
+import { useAuth } from "../../hooks/useAuth";
 
 
 const PersonalAccount = ()=>{
 
     const dispatch = useDispatch();
 
-    const user = useSelector(state => state.user);
+    const user = useAuth();
 
    
     const [isEditing, setIsEditing] = useState(false);

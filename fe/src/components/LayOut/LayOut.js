@@ -9,8 +9,6 @@ const LayOut = ({ children }) => {
 
   const { pathname } = router;
   
-
-  console.log(noHeader.includes(pathname));
   return (
     <div>
       <div className="flex flex-col h-screen">

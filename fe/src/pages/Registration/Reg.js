@@ -1,4 +1,4 @@
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {LockOutlined, UserOutlined,HomeOutlined} from '@ant-design/icons';
 import {Button, Card, Form, Input, Typography,notification} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from "react-redux"
@@ -41,6 +41,9 @@ const Reg =() => {
       }
       
     }
+    const onClickHome = () => {
+      navigate("/home");
+    };
     return (
       <LayOut >
           <div className='reg'>
@@ -55,12 +58,17 @@ const Reg =() => {
         }}
         onFinish={onFinish}
       >
-          <Form.Item >
-          <Title level = {2}>Генератор табулатуры</Title>
-              <Text type = "secondary">
-                 Регистрация в сервисе для генерации табулатуры
-              </Text>
-          </Form.Item>
+        <Form.Item>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <Title level={2}>Генератор табулатуры</Title>
+                  <Text type="secondary">
+                    Регистрация в сервисе для генерации табулатуры
+                  </Text>
+                </div>
+                <Button type="link" onClick={onClickHome} icon={<HomeOutlined />} />
+              </div>
+      </Form.Item>
           
         <Form.Item
           name="email"
