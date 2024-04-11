@@ -11,16 +11,16 @@ const SongInfo=({song})=>{
           <Title strong style={{fontSize:'18px'}} >Инструменты:</Title>
           <List
             bordered
-            dataSource={song.instruments}
-            renderItem={(instrument) => (
+            dataSource={song.tabs}
+            renderItem={(tab) => (
               <List.Item>
-                  <div key={instrument.name}>
-                  <Text style={{ fontSize: "18px" }} strong>{instrument.name}</Text>
+                  <div key={tab.id}>
+                  <Text style={{ fontSize: "18px" }} strong> {tab.instrumentName}</Text>
                   <br/>
-                  <Image src={instrument.tabImageUrl} alt="Табулатура" style={{ width: "300px", height: "200px" }} />
+                  <Image src={tab.url} alt="Табулатура" style={{ width: "300px", height: "200px" }} />
                   <br/>
-                  <Button type="primary" href={instrument.tabDownloadUrl} download>
-                      Скачать табулатуру для {instrument.name}
+                  <Button type="primary" href={tab.url} download>
+                      Скачать табулатуру для {tab.instrumentName}
                   </Button>
                   </div>
               </List.Item>

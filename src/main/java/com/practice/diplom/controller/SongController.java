@@ -59,7 +59,10 @@ public class SongController {
     @GetMapping("/all")
     @Operation(summary = "Получение список всех песен")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    public Page<SongResponseDto> getAllSongs(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public Page<SongResponseDto> getAllSongs(@PageableDefault( sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        System.out.println(pageable.getPageNumber());
+        System.out.println(pageable);
+        System.out.println(pageable.getPageSize());
         return songService.getAllSongs(pageable);
     }
 

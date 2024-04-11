@@ -2,12 +2,14 @@ import {Avatar} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
 import {space,verticalCenter,logoStyle} from "./Header.style.js";
-import{useSelector,useDispatch} from "react-redux";
+import{useDispatch} from "react-redux";
 import { logout } from '../../store/actionCreators/logout';
+import { useAuth } from '../../hooks/useAuth.js';
+
+
 const HeaderConf = () => {
-    const user = useSelector(state => state.user);
+    const user = useAuth();
     const dispatch = useDispatch();
-    console.log(user.id)
 
     const logOut =()=>{
         dispatch(logout());
@@ -45,7 +47,11 @@ const HeaderConf = () => {
             },
             {
               label: (
-                <NavLink to="/login" onClick={logOut}>Выйти из аккаунта</NavLink>
+                user.isAuth ? (
+                  <NavLink to="/login" onClick={logOut}>Выйти из аккаунта</NavLink>
+                ) : (
+                  <NavLink to="/login">Войти в аккаунт</NavLink>
+                )
               ),
               key: 'login',
               style: verticalCenter
