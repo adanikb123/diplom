@@ -4,6 +4,7 @@ import com.practice.diplom.dto.JwtResponseDto;
 import com.practice.diplom.dto.LoginRequestDto;
 import com.practice.diplom.dto.UserRequestDto;
 import com.practice.diplom.dto.UserResponseDto;
+import com.practice.diplom.dto.UserUpdateRequestDto;
 import com.practice.diplom.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     JwtResponseDto authenticateUser(LoginRequestDto loginRequest);
 
-    void updateUser(UserRequestDto newUser, Long id);
+    void updateUser(UserUpdateRequestDto newUser, Long id);
 
     void deleteUser(Long id);
 
@@ -28,9 +29,11 @@ public interface UserService extends UserDetailsService {
 
     UserResponseDto getUserDtoById(Long id);
 
+    UserResponseDto getUserDtoByEmail(String email);
+
     User loadUserByUsername(String email);
 
-    void changePassword(String password);
+    void changePassword(String password,Long id);
 
     void checkid(Long id);
 }

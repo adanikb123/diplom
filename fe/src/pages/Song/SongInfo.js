@@ -17,9 +17,9 @@ const SongInfo=({song})=>{
                   <div key={tab.id}>
                   <Text style={{ fontSize: "18px" }} strong> {tab.instrumentName}</Text>
                   <br/>
-                  <Image src={tab.url} alt="Табулатура" style={{ width: "300px", height: "200px" }} />
+                  <Image src={process.env.PUBLIC_URL + tab.url } alt="Табулатура" style={{ width: "300px", height: "200px" }} />
                   <br/>
-                  <Button type="primary" href={tab.url} download>
+                  <Button type="primary" href={process.env.PUBLIC_URL + tab.url} download>
                       Скачать табулатуру для {tab.instrumentName}
                   </Button>
                   </div>

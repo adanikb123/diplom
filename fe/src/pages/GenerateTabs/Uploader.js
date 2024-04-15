@@ -1,47 +1,77 @@
 import {useState} from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload,message,Card,Typography } from 'antd';
+import { UploadOutlined,FileOutlined,DeleteOutlined } from '@ant-design/icons';
+import { Button, Upload,Input,Card,Typography,notification } from 'antd';
 import "./style.css";
 import { SongInfo } from '../Song';
+import { uploadFile } from '../../services/uploadFile';
+import { useAuth } from '../../hooks/useAuth';
+import {useDispatch,useSelector} from "react-redux"
+import { uploadFileState } from '../../store/actionCreators/uploadFileState';
+import { clearFile } from '../../store/actionCreators/clearFile';
+import { deleteFile } from '../../services/deleteFile';
+import { generateTabs } from '../../services/generateTabs';
+import { createSong } from '../../services/createSong';
+import { addSong } from '../../store/actionCreators/addSong';
+import { createUserSong } from '../../services/createUserSong';
+import { deleteSong } from '../../store/actionCreators/deleteSong';
 
 const {Title,Text} = Typography;
 const Uploader=()=>{
-  const [fileList, setFileList] = useState([]);
-  const [fileUploaded, setFileUploaded] = useState(false);
-  const [showSongInfo, setShowSongInfo] = useState(false);
-  const song = {
-    author: "John Test",
-    name: "Песня 1",
-    instruments: [
-      { name: "Гитара", tabImageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ea/12_bar_blues_in_A_for_guitar_in_tab.png", tabDownloadUrl: "https://example.com/guitar-tab.pdf" },
-      { name: "Пианино", tabImageUrl: "https://example.com/piano-tab.jpg", tabDownloadUrl: "https://example.com/piano-tab.pdf" }
-    ]
-  };
+  const file = useSelector(state => state.file);
+  const song = useSelector(state => state.song);
+  const dispatch = useDispatch();
+  const user = useAuth();
 
-  const handleUploadChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    setFileUploaded(true)
-  };
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
+  const [songName, setSongName] = useState("");
+  const [author, setAuthor] = useState("");
+
+  const handleUploadFile = async (info) => {
+
+    try {
+      const uploadedFile = await uploadFile(info, user.token);
+      dispatch(uploadFileState(uploadedFile.data,true));
+    } catch (error) {
+      console.log(error);
     }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
+    
+  }
+  const handleGenerateTab = async () => {
+    const response = await generateTabs(file.url,user.token)
+
+    console.log(response.data);
+
+    if (!songName || !author) {
+      notification.open({
+        message:"Ошибка",
+        description:"Название песни или автор не должны быть пустыми",
+        placement:"topLeft",
+        type:"error"
+   });
+      return;
+    }
+
+    const {data}= await createSong(songName,author,response.data,user.token);
+
+    dispatch(addSong(data));
+    console.log(data);
+ 
+
+    await createUserSong(user.id,data.id,user.token);
+    notification.open({
+     message:"Вы успешно загрузили песню",
+     description:"Посмотреть историю загрузок можете в личном кабинете",
+     placement:"topLeft",
+     type:"success"
+});
+
   };
 
-  const handleGenerateTab = () => {
-  
-    setShowSongInfo(true);
-    console.log(song);
-  };
+  const handleDeleteFile = async ()=>{
+    await deleteFile(file,user.token);
+
+    dispatch(clearFile())
+    dispatch(deleteSong())
+  }
 
   return (
     <div >
@@ -50,21 +80,26 @@ const Uploader=()=>{
           <Title level={2}>Выберите файл</Title>
           <Upload
             name="file"
-            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-            fileList={fileList}
-            onChange={handleUploadChange}
-            onPreview={onPreview}
+            action={handleUploadFile}
+            showUploadList={false}
+            maxCount={1}
           >
             <Button icon={<UploadOutlined />}>Нажмите, чтобы загрузить</Button>
           </Upload>
-          {fileUploaded && (
-            <Button type="primary" onClick={handleGenerateTab}>
-              Сгенерировать табулатуру 
-            </Button>
+          {file.uploaded && (
+            <div>
+              <FileOutlined/>{file.name} <DeleteOutlined onClick={handleDeleteFile} style = {{color : "red"}}/> <br/> 
+              <Input placeholder="Название песни" value={songName} onChange={(e) => setSongName(e.target.value)} /> <br />
+              <Input placeholder="Автор" value={author} onChange={(e) => setAuthor(e.target.value)} /> <br />
+              <Button type="primary" onClick={handleGenerateTab}>
+                    Сгенерировать табулатуру 
+              </Button>
+            </div>
+          
           )}
         </Card>
       </div>
-      {showSongInfo && (
+      {song.isGenerated && (
         <div >
           <SongInfo song={song} />
         </div>

@@ -6,7 +6,7 @@ export const useAuth=()=>{
     return {
         isAuth: Boolean(user.id),
         email:user.email,
-        username:user.username,
+        name:user.name,
         token:user.token,
         id:user.id,
         role:user.role
