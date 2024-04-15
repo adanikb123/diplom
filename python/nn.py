@@ -15,15 +15,15 @@ def preprocess_audio(audio_file):
 def prepare_input_data(audio_data):
     return "input_data"
 def generate(input_data):
-    result  =[ {
-        "intrumentName":"acoustic guitar",
+    tabs  =[ {
+        "instrumentName":"acoustic guitar",
         "url":"https://i.pinimg.com/564x/12/fc/ab/12fcab16b6ff0ba2047449797341ee43.jpg"
     },
     {
         "instrumentName":"bass guitar",
         "url":"https://content.tomplay.com/preview/2022/09/Ima_Demons_INT_OV_ElectricBass_NotesTab_Danny_fl_emil_v2_25-08-2022_001.png"
     }]
-    return result
+    return tabs
 
 # Генерация табулатуры из аудиофайла
 def generate_tablature(audio_file):

@@ -1,12 +1,12 @@
-import { BrowserRouter as Router, Route, Routes, Navigate, Redirect  } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { Login,Reg ,Song, Main, UserManager, PersonalAccount, GenerateTabs} from '../'
 import LayOut  from "../../components/LayOut/LayOut";
 import { RequireAuth } from "./RequireAuth";
+import { ChangePassword } from "../Login";
 
 
 const App = () => {
-    
-   
+
     return (
       <Router>
         <LayOut>
@@ -14,6 +14,8 @@ const App = () => {
             <Route exact path = "/" element = {<Navigate to =  "/home"/>} />
               
             <Route path="/login" element={<Login/>}/>
+
+            <Route path="/change-password" element={<ChangePassword/>}/>
 
             <Route path="/registration" element={<Reg/>}/>
 

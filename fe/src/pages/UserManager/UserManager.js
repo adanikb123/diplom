@@ -1,35 +1,39 @@
 import { Table, Input, Select,Button,notification } from "antd";
-import React, { useState } from "react";
+import {useSelector,useDispatch} from "react-redux";
+import { getUsers } from "../../store/actionCreators/getUsers";
+import { getAllUsers } from "../../services/getAllUsers";
+import { refreshUsers } from "../../store/actionCreators/refreshUsers";
+import { useEffect } from "react";
 import "./style.css"
+import { useAuth } from "../../hooks/useAuth";
+import { updateUser } from "../../services/updateUser";
 
 const { Option } = Select;
 const UserManager =()=> {
-    const [users, setUsers] = useState(
-        [
-            {
-                id: 1,
-                username: "johnsmith",
-                email: "johnsmith@example.com",
-                role: "USER"
-            },
-            {
-                id: 2,
-                username: "janedoe",
-                email: "janedoe@example.com",
-                role: "ADMIN"
-            },
-            {
-                id: 3,
-                username: "alexander",
-                email: "alexander@example.com",
-                role: "USER"
-            }
-        ]
-    )
+  const pageSize = 3;
+  const users = useSelector(state => state.users.users);
+  const currPage = useSelector(state => state.users.currentPage)
+  const total = useSelector(state => state.users.totalElements)
+  const user = useAuth();
+  const dispatch = useDispatch(); 
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAllUsers(0, pageSize,user.token);
+      const {number,totalElements,content} = response.data;
+      console.log(content);
+      dispatch(getUsers(content,number,totalElements));
+
+    };
+    fetchData();
+  }, [dispatch]);
+  
+
     const columns = [
         {
           title: "Username",
-          dataIndex: "username",
+          dataIndex: "name",
           key: "username",
           render: (text, record) => (
             <Input
@@ -62,30 +66,63 @@ const UserManager =()=> {
         },
       ];
 const handleUsernameChange = (userId, value) => {
-    setUsers((prevState) =>
-      prevState.map((user) =>
-        user.id === userId ? { ...user, username: value } : user
-      )
-    );
+  const updatedUsers = users.map(user => {
+    if (user.id == userId) {
+      return {
+        ...user,
+        name: value
+      };
+    }
+    return user;
+  });
+    dispatch(refreshUsers(updatedUsers));
   };
 
   const handleRoleChange = (userId, value) => {
-    setUsers((prevState) =>
-      prevState.map((user) =>
-        user.id === userId ? { ...user, role: value } : user
-      )
-    );
+    const updatedUsers = users.map(user => {
+      if (user.id == userId) {
+        return {
+          ...user,
+          role: value
+        };
+      }
+      return user;
+    });
+      dispatch(refreshUsers(updatedUsers));
+
   };
-  const handleSave = ()=>{
+  const handleSave = async()=>{
+    for (const targetUser of users) {
+      await updateUser(targetUser, user.token);
+    }
+  
     notification.open({
         message:'Данные успешно сохраненны',
         placement:"topRight",
         type:"success"
     });
   }
+
+  const handlePageChange= async(page)=>{
+    const response = await getAllUsers(page-1, pageSize,user.token);
+    const {number,totalElements,content} = response.data;
+    dispatch(getUsers(content,number,totalElements));
+  }
+
     return (
         <div>
-            <Table dataSource={users} columns={columns} bordered = {true} rowClassName="table" className="table" />
+            <Table 
+            dataSource={users}
+            columns={columns} 
+            bordered = {true} 
+            rowClassName="table" 
+            className="table"
+            pagination={{ 
+                total:total,
+                current: currPage+1,
+                pageSize,
+                onChange:handlePageChange 
+              }}  />
 
             <Button type="primary" onClick={handleSave} className="saveButton">
                     Сохранить

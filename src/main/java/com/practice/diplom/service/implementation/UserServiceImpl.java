@@ -5,6 +5,7 @@ import com.practice.diplom.dto.JwtResponseDto;
 import com.practice.diplom.dto.LoginRequestDto;
 import com.practice.diplom.dto.UserRequestDto;
 import com.practice.diplom.dto.UserResponseDto;
+import com.practice.diplom.dto.UserUpdateRequestDto;
 import com.practice.diplom.entity.User;
 import com.practice.diplom.entity.enums.RoleType;
 import com.practice.diplom.exception.AlreadyExistException;
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
         JwtResponseDto jwtResponse = new JwtResponseDto();
         jwtResponse.setToken(jwt);
         jwtResponse.setId(user.getId());
-        jwtResponse.setUsername(user.getName());
+        jwtResponse.setName(user.getName());
         jwtResponse.setEmail(user.getEmail());
         jwtResponse.setRole(roleType);
         return jwtResponse;
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
         JwtResponseDto jwtResponse = new JwtResponseDto();
         jwtResponse.setToken(jwt);
         jwtResponse.setId(userDetails.getId());
-        jwtResponse.setUsername(userDetails.getName());
+        jwtResponse.setName(userDetails.getName());
         jwtResponse.setEmail(userDetails.getEmail());
         jwtResponse.setRole(role);
         return jwtResponse;
@@ -110,11 +111,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserRequestDto newUser, Long id) {
+    public void updateUser(UserUpdateRequestDto newUser, Long id) {
         User user = getUserById(id);
         user.setName(newUser.getName());
         user.setEmail(newUser.getEmail());
-        user.setPassword(newUser.getPassword());
         user.setRole(newUser.getRole());
         userRepository.save(user);
     }
@@ -145,9 +145,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponseDto getUserDtoByEmail(String email) {
+        checkEmail(email);
+        User user = userRepository.findByEmail(email).get();
+        return userMapper.toResponseDto(user);
+    }
+
+    @Override
     public void checkid(Long id) {
         if (!userRepository.existsById(id)) {
             throw new NotFoundException(String.format("Пользователь с таким id = %d не существует", id));
+        }
+    }
+    public void checkEmail(String email){
+        if (!userRepository.existsByEmail(email)) {
+            throw new NotFoundException(String.format("Пользователь с таким email = %s не существует", email));
         }
     }
 
@@ -160,11 +172,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void changePassword(String password) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        Long userId = ((User) authentication.getPrincipal()).getId();
-        User user = getUserById(userId);
+    public void changePassword(String password,Long id) {
+        User user = getUserById(id);
 
         user.setPassword(encoder.encode(password));
         userRepository.save(user);

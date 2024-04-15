@@ -12,17 +12,14 @@ const Main =()=>{
     
     const pageSize = 2;
     const dispatch = useDispatch();
-    const songs = useSelector(state => state.song.songs)
-    const currPage = useSelector(state => state.song.currentPage)
-    const total = useSelector(state => state.song.totalElements)
+    const songs = useSelector(state => state.songs.songs)
+    const currPage = useSelector(state => state.songs.currentPage)
+    const total = useSelector(state => state.songs.totalElements)
 
-    // console.log(currentPage);
-    // console.log(totalElements);
     useEffect(() => {
       const fetchData = async () => {
         const response = await getAllSongs(0, pageSize);
         const {number,totalElements,content} = response.data;
-        console.log(number);
         dispatch(getSongs(content,number,totalElements));
  
       };
@@ -32,7 +29,6 @@ const Main =()=>{
     const handlePageChange= async(page)=>{
       const response = await getAllSongs(page-1, pageSize);
       const {number,totalElements,content} = response.data;
-      console.log(number);
       dispatch(getSongs(content,number,totalElements));
     }
 
@@ -57,7 +53,9 @@ const Main =()=>{
           <>
             {record.tabs.map((tab) => (
               <div key={tab.id}>
-                 <Link to={tab.url}>{tab.instrumentName}</Link>
+                  <a href={process.env.PUBLIC_URL + tab.url} target="_blank" rel="noopener noreferrer">
+            {tab.instrumentName}
+          </a>
               </div>
             ))}
           </>

@@ -40,6 +40,17 @@ const HeaderConf = () => {
             },
             {
               label: (
+              (user.role == "ADMIN") ?(
+                  <NavLink to="/users">Пользователи</NavLink>
+                ):(
+                   <></>
+                )
+              ),
+              key: 'users',
+              style: verticalCenter
+            },
+            {
+              label: (
                 <span></span>
               ),
               key: 'space',

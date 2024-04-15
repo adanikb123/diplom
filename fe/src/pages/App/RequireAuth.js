@@ -13,7 +13,6 @@ export const RequireAuth=({ children })=>{
         });
         return <Navigate to="/login" />;
     };
-    console.log(user.isAuth);
     return user.isAuth ?
     (
         <div>{children}</div> 

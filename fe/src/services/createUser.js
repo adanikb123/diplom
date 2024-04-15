@@ -7,7 +7,6 @@ const createUser = async(email,name,password)=>
         email:email,
         password:password,
         role:"USER"};
-    console.log(request);
     return  await axios.post('http://localhost:8080/auth/new',request) ;
 }
 

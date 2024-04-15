@@ -38,11 +38,14 @@ const Login = () => {
         placement:"topRight",
         type:"error"
     });
-    console.log(error);
+
     }
 
   }
 
+  const onClickChangePassword = () => {
+    navigate("/change-password");
+  };
   const onClickRegistration = () => {
     navigate("/registration")
     };
@@ -109,7 +112,9 @@ const Login = () => {
             Зарегистрироваться 
         </Button>
       </Form.Item>
-
+      <Form.Item>
+                <Button type="link" onClick={onClickChangePassword}>Сменить пароль</Button>
+              </Form.Item>
       
     </Form>
         </Card>

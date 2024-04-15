@@ -1,20 +1,28 @@
-
 const initialState = {
-    songs:[],
-    currentPage:0,
-    totalElements:0
+    author:null,
+    name:null,
+    id:null,
+    tabs:[],
+    isGenerated:false,
 }
 
-const GET_SONGS = "GET_SONGS";
+const ADD = "ADD_SONG";
+const DELETE = "DELETE_SONG";
 
-export const songReducer= (state = initialState,action)=>{
+export const songReducer =(state = initialState,action)=>{
+
     switch(action.type){
-        case GET_SONGS:
-            const {songs,currentPage,totalElements} = action.payload;
-            console.log(songs);
-            return {...state,songs,currentPage,totalElements}
+        case ADD:{
+            const { author, name, id,tabs,isGenerated } = action.payload;
+            return{...state,author,name,id,tabs,isGenerated};
+        }
+        case DELETE:{
+            const { author, name, id,tabs,isGenerated } = action.payload;
+            console.log("qwewqewqe")
+            return{...state,author,name,id,tabs,isGenerated};
+        }
+  
         default:
             return state;
     }
-
 }

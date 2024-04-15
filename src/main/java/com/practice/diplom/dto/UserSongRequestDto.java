@@ -1,6 +1,6 @@
 package com.practice.diplom.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSongRequestDto {
-    @NotBlank(message = "{songId.notBlank}")
+    @NotNull(message = "{songId.notNull}")
     private Long songId;
-    @NotBlank(message = "{userId.notBlank}")
+    @NotNull(message = "{userId.notNull}")
     private Long userId;
 }

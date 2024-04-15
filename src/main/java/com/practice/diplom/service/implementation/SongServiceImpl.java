@@ -55,7 +55,10 @@ public class SongServiceImpl implements SongService {
             tab.setSong(song);
         }
         songRepository.save(song);
-        return songMapper.toResponseDto(song);
+        SongResponseDto ss = songMapper.toResponseDto(song);
+        System.out.println(ss.getAuthor());
+        System.out.println(ss.getName());
+        return ss;
     }
 
     @Override

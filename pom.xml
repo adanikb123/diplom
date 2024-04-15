@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.practice</groupId>
 	<artifactId>diplom</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>diplom</name>
 	<description>client for diplom</description>
 	<properties>
@@ -105,7 +105,11 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.12.5</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
