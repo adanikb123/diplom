@@ -9,6 +9,9 @@ import { updateUser } from "../../services/updateUser";
 import {logout} from "../../store/actionCreators/logout"
 import { getAllUsersSongs } from "../../services/getAllUsersSongs";
 import { getSongs } from "../../store/actionCreators/getSongs";
+import { clearSongs } from "../../store/actionCreators/clearSongs";
+import axios from "axios";
+import { deleteUser } from "../../services/deleteUser";
 
 
 const PersonalAccount = ()=>{
@@ -31,6 +34,7 @@ const PersonalAccount = ()=>{
 
     useEffect(() => {
       const fetchData = async () => {
+        dispatch(clearSongs());
         const response = await getAllUsersSongs(0, pageSize,user);
         const {number,totalElements,content} = response.data;
         const songsArray = content.map(item => item.song);
@@ -55,8 +59,10 @@ const PersonalAccount = ()=>{
     });
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = async () => {
         setIsModalVisible(true);
+        await deleteUser(user.id,user.token)
+        dispatch(logout)
       };
 
     const handleInputChange = (e) => {

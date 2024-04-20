@@ -79,6 +79,7 @@ const Uploader=()=>{
         <Card className='center-card'>
           <Title level={2}>Выберите файл</Title>
           <Upload
+            accept=".wav,.m4a"
             name="file"
             action={handleUploadFile}
             showUploadList={false}

@@ -3,6 +3,7 @@ import { Login,Reg ,Song, Main, UserManager, PersonalAccount, GenerateTabs} from
 import LayOut  from "../../components/LayOut/LayOut";
 import { RequireAuth } from "./RequireAuth";
 import { ChangePassword } from "../Login";
+import { Storage } from "./Storage";
 
 
 const App = () => {
@@ -41,6 +42,11 @@ const App = () => {
               </RequireAuth>
          
             }/>
+
+            <Route path="/storage/*" element={
+            <RequireAuth>
+              <Storage/>
+            </RequireAuth>}/>
 
             <Route path="/users" element={
               <RequireAuth>

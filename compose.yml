@@ -1,0 +1,65 @@
+version: '3'
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 322644
+      POSTGRES_DB: diplom
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  app:
+    build: ./be
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - python
+    volumes:
+      - common-volume:/app/storage
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/diplom?stringtype=unspecified
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 322644
+    networks:
+      - my-network
+
+
+  python:
+    build: ./python
+    container_name: python-back
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=True
+    restart: on-failure
+    volumes:
+      - ./python:/python
+      - common-volume:/app/storage
+    ports:
+      - "5001:5001"
+    networks:
+      - my-network
+
+  fe:
+    build: ./fe
+    ports:
+      - 3000:3000
+    depends_on:
+      - app
+    volumes:
+      - common-volume:/app/storage
+    networks:
+        - my-network
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  common-volume:

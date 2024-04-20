@@ -1,7 +1,7 @@
 import {Avatar} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
-import {space,verticalCenter,logoStyle} from "./Header.style.js";
+import "./style.css"
 import{useDispatch} from "react-redux";
 import { logout } from '../../store/actionCreators/logout';
 import { useAuth } from '../../hooks/useAuth.js';
@@ -19,63 +19,56 @@ const HeaderConf = () => {
         [
             {
               label: (
-                <NavLink to="/home" style={logoStyle}>Генератор табулатуры</NavLink>
+                <NavLink to="/home" className={'logostyle'} >Генератор табулатуры</NavLink>
               ),
               key: 'tabs',
-              style: verticalCenter
             },
             {
               label: (
-                <NavLink to="/home">На главную</NavLink>
+                <NavLink to="/home"className={'vertical_center'}>На главную</NavLink>
               ),
               key: 'home',
-              style: verticalCenter
             },
             {
               label: (
-                <NavLink to="/generate-tabs">Сгенерировать табулатуры</NavLink>
+                <NavLink to="/generate-tabs"className={'vertical_center'}>Сгенерировать табулатуры</NavLink>
               ),
               key: 'tabs_generator',
-              style: verticalCenter
             },
             {
               label: (
               (user.role == "ADMIN") ?(
-                  <NavLink to="/users">Пользователи</NavLink>
+                  <NavLink to="/users"className={'vertical_center'}>Пользователи</NavLink>
                 ):(
                    <></>
                 )
               ),
               key: 'users',
-              style: verticalCenter
             },
             {
               label: (
-                <span></span>
+                <span className='space'></span>
               ),
               key: 'space',
-              style: space
             },
             {
               label: (
                 user.isAuth ? (
-                  <NavLink to="/login" onClick={logOut}>Выйти из аккаунта</NavLink>
+                  <NavLink to="/login" onClick={logOut} className={'vertical_center'}>Выйти из аккаунта</NavLink>
                 ) : (
-                  <NavLink to="/login">Войти в аккаунт</NavLink>
+                  <NavLink to="/login"className={'vertical_center'}>Войти в аккаунт</NavLink>
                 )
               ),
               key: 'login',
-              style: verticalCenter
             },
             {
               label: (
-                <NavLink to={`/user/${user.id}`}>
+                <NavLink to={`/user/${user.id}`}className={'verticalcenter'}>
                   <Avatar size="small" icon={<UserOutlined />} />
                   <span> </span>
                 </NavLink>
               ),
               key: 'avatar',
-              style: verticalCenter
             }
           ]
     );
