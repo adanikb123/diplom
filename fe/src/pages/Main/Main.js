@@ -10,7 +10,7 @@ import { getSongs } from "../../store/actionCreators/getSongs";
 
 const Main =()=>{
     
-    const pageSize = 2;
+    const pageSize = 4;
     const dispatch = useDispatch();
     const songs = useSelector(state => state.songs.songs)
     const currPage = useSelector(state => state.songs.currentPage)
